@@ -1,0 +1,74 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class J40 {
+    public static void main(String[] args) {
+
+        JFrame ventana = new JFrame("Nivel 3: Botones Interactivos");
+        ventana.setSize(400, 450);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setLocationRelativeTo(null);
+        ventana.setLayout(null);
+
+        // PRIMER EJERCICIO
+
+        JLabel etiqueta = new JLabel("Escribe tu nombre:");
+        etiqueta.setBounds(30, 30, 200, 25);
+        ventana.add(etiqueta);
+
+        JTextField campoTexto = new JTextField();
+        campoTexto.setBounds(30, 60, 300, 30);
+        ventana.add(campoTexto);
+
+        JButton botonSaludar = new JButton("Saludar");
+        botonSaludar.setBounds(130, 105, 120, 35);
+        ventana.add(botonSaludar);
+
+        botonSaludar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombreIngresado = campoTexto.getText();
+
+                if (!nombreIngresado.isEmpty()) {
+                    JOptionPane.showMessageDialog(ventana,
+                            "¡Hola, " + nombreIngresado + "!");
+                } else {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Escribe tu nombre primero.");
+                }
+            }
+        });
+
+        // SEGUNDO EJERCICIO
+
+        JLabel etiqueta2 = new JLabel("Escribe tu pseudónimo:");
+        etiqueta2.setBounds(30, 170, 250, 25);
+        ventana.add(etiqueta2);
+
+        JTextField campoPseudonimo = new JTextField();
+        campoPseudonimo.setBounds(30, 200, 300, 30);
+        ventana.add(campoPseudonimo);
+
+        JButton botonAdios = new JButton("Despedir");
+        botonAdios.setBounds(130, 250, 120, 35);
+        ventana.add(botonAdios);
+
+        botonAdios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String pseudonimo = campoPseudonimo.getText();
+
+                if (!pseudonimo.isEmpty()) {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Adiós " + pseudonimo);
+                } else {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Escribe tu pseudónimo primero.");
+                }
+            }
+        });
+
+        // MOSTRAR VENTANA
+        ventana.setVisible(true);
+    }
+}
