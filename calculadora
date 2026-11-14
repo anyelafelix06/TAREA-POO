@@ -1,0 +1,120 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calculadora{
+
+    public static void main(String[] args) {
+        
+        JFrame ventana = new JFrame("Calculadora");
+        
+        ventana.setSize(350, 300);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setLocationRelativeTo(null);
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 2, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        
+        JLabel etiqueta1 = new JLabel("Primer número:");
+        JLabel etiqueta2 = new JLabel("Segundo número:");
+        
+        JTextField numero1 = new JTextField();
+        JTextField numero2 = new JTextField();
+        
+        JButton sumar = new JButton("Sumar (+)");
+        JButton restar = new JButton("Restar (-)");
+        JButton multiplicar = new JButton("Multiplicar (*)");
+        JButton dividir = new JButton("Dividir (/)");
+        
+        JLabel resultado = new JLabel("Resultado: ");
+        
+        panel.add(etiqueta1);
+        panel.add(numero1);
+
+        panel.add(etiqueta2);
+        panel.add(numero2);
+
+        panel.add(sumar);
+        panel.add(restar);
+
+        panel.add(multiplicar);
+        panel.add(dividir);
+
+        panel.add(resultado);
+        
+        sumar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double n1 = Double.parseDouble(numero1.getText());
+                    double n2 = Double.parseDouble(numero2.getText());
+
+                    double total = n1 + n2;
+                    resultado.setText("Resultado: " + total);
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Ingresa números válidos.");
+                }
+            }
+        });
+        
+        restar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double n1 = Double.parseDouble(numero1.getText());
+                    double n2 = Double.parseDouble(numero2.getText());
+
+                    double total = n1 - n2;
+                    resultado.setText("Resultado: " + total);
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Ingresa números válidos.");
+                }
+            }
+        });
+        
+        multiplicar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double n1 = Double.parseDouble(numero1.getText());
+                    double n2 = Double.parseDouble(numero2.getText());
+
+                    double total = n1 * n2;
+                    resultado.setText("Resultado: " + total);
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Ingresa números válidos.");
+                }
+            }
+        });
+
+        
+        dividir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double n1 = Double.parseDouble(numero1.getText());
+                    double n2 = Double.parseDouble(numero2.getText());
+
+                    if (n2 == 0) {
+                        JOptionPane.showMessageDialog(ventana,
+                                "No se puede dividir entre cero.");
+                    } else {
+                        double total = n1 / n2;
+                        resultado.setText("Resultado: " + total);
+                    }
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(ventana,
+                            "Ingresa números válidos.");
+                }
+            }
+        });
+        
+        ventana.add(panel);
+        ventana.setVisible(true);
+    }
+}
