@@ -1,0 +1,158 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Calculadora extends JFrame implements ActionListener {
+
+    JTextField pantalla;
+
+    double numero1, numero2, resultado;
+    String operador = "";
+
+    public Calculadora() {
+
+        setTitle("Mi Calculadora");
+        setSize(350, 450);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(5, 5));
+
+        pantalla = new JTextField();
+        pantalla.setFont(new Font("Arial", Font.BOLD, 30));
+        pantalla.setHorizontalAlignment(JTextField.RIGHT);
+        pantalla.setEditable(false);
+        add(pantalla, BorderLayout.NORTH);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 4, 5, 5));
+
+
+        String[] botones = {
+                "C", "←", "%", "/",
+                "7", "8", "9", "*",
+                "4", "5", "6", "-",
+                "1", "2", "3", "+",
+                "0", ".", "=", ""
+        };
+
+        for (String texto : botones) {
+
+            if (texto.equals("")) {
+                panel.add(new JLabel());
+                continue;
+            }
+
+            JButton boton = new JButton(texto);
+            boton.setFont(new Font("Arial", Font.BOLD, 22));
+            boton.addActionListener(this);
+
+            panel.add(boton);
+        }
+
+        add(panel, BorderLayout.CENTER);
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        String comando = e.getActionCommand();
+
+
+        if (comando.equals("C")) {
+            pantalla.setText("");
+            numero1 = 0;
+            numero2 = 0;
+            operador = "";
+        }
+
+        // Borrar último carácter
+        else if (comando.equals("←")) {
+            String texto = pantalla.getText();
+
+            if (!texto.isEmpty()) {
+                pantalla.setText(
+                        texto.substring(0, texto.length() - 1)
+                );
+            }
+        }
+
+
+        else if (comando.equals("+") ||
+                comando.equals("-") ||
+                comando.equals("*") ||
+                comando.equals("/") ||
+                comando.equals("%")) {
+
+            try {
+                numero1 = Double.parseDouble(pantalla.getText());
+                operador = comando;
+                pantalla.setText("");
+            } catch (NumberFormatException ex) {
+                pantalla.setText("Error");
+            }
+        }
+
+
+        else if (comando.equals("=")) {
+
+            try {
+                numero2 = Double.parseDouble(pantalla.getText());
+
+                switch (operador) {
+
+                    case "+":
+                        resultado = numero1 + numero2;
+                        break;
+
+                    case "-":
+                        resultado = numero1 - numero2;
+                        break;
+
+                    case "*":
+                        resultado = numero1 * numero2;
+                        break;
+
+                    case "/":
+                        if (numero2 == 0) {
+                            pantalla.setText("No se puede dividir entre 0");
+                            return;
+                        }
+                        resultado = numero1 / numero2;
+                        break;
+
+                    case "%":
+                        resultado = numero1 % numero2;
+                        break;
+                }
+
+                pantalla.setText(String.valueOf(resultado));
+
+            } catch (NumberFormatException ex) {
+                pantalla.setText("Error");
+            }
+        }
+
+        else {
+
+            if (comando.equals(".") &&
+                    pantalla.getText().contains(".")) {
+                return;
+            }
+
+            if (pantalla.getText().equals("Error")) {
+                pantalla.setText("");
+            }
+
+            pantalla.setText(pantalla.getText() + comando);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(() -> {
+            new Calculadora();
+        });
+
+    }
+}
